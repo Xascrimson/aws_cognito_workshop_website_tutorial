@@ -1,0 +1,5 @@
+baseURL = "http://example.org/"
+languageCode = "en-us"
+title = "AWS Cognito security workshop"
+BookMenuBundle =  "/menu"
+theme = "book"

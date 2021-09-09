@@ -1,0 +1,33 @@
+---
+title: "8) Validating authorised users"
+date: 2021-09-06T23:48:59+12:00
+draft: false
+---
+https://docs.aws.amazon.com/cognito/latest/developerguide/amazon-cognito-user-pools-using-tokens-verifying-a-jwt.html
+
+Referencing back to our id token from the previous section. If you've successfully logged in you may notice something on the URL string. 
+
+An example URL: we see that it contains the following:
+1. "id_token"
+2. "access_token"
+
+https://d20kaehm9l5sb.cloudfront.net/#id_token=eyJraWQiOiIrcUxuYStheGRTT28yRjFQdHhzM2YzcVA3VkJUdkh5TU5cL1d0NGRmTnRlWT0iLCJhbGciOiJSUzI1NiJ9.eyJhdF9oYXNoIjoid0FqOHJFbE8xQmJ0WGIybjVRMFhXZyIsInN1YiI6IjNjOTA3ZDQ1LWQzMWQtNGQ2OS04MzVjLTEzOTQ4ZDhhZTk4ZSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAuYXAtc291dGhlYXN0LTIuYW1hem9uYXdzLmNvbVwvYXAtc291dGhlYXN0LTJfVDdSVkZBUEVSIiwiY29nbml0bzp1c2VybmFtZSI6InN0ZnUiLCJhdWQiOiI2ZzFsODRrbHRnNzhtMmFubm9pZ283YzNwOCIsImV2ZW50X2lkIjoiMjIyMTM2OGUtNzNkNy00OWNhLTk1NjQtNDU1Mjk5YjVlNDFkIiwidG9rZW5fdXNlIjoiaWQiLCJhdXRoX3RpbWUiOjE2MzExMDAyMDEsImV4cCI6MTYzMTEwMzgwMSwiaWF0IjoxNjMxMTAwMjAxLCJqdGkiOiIzODg5NjI4MC1jOGFhLTQ5ZjEtOTQ1YS1mYWFiNTk4YmQ4MTQiLCJlbWFpbCI6ImRhbm55aHVhbmcxMjM0QGdtYWlsLmNvbSJ9.SLAUz4teBmS4bRNPngnmSk-EW7bijVry7TQwUTe2pq5ffGclchTuARvRSaWZpynDIk37aUvDsyqWfBB9KF10xIIrZgafSsO235ufdwMYA89XUIier7Mr7jwwMUnDsFtk3du8LM__MAUnfauZ0L5B1pqtUbaNBThnNBDQ-zLQh5bxs6T8ZT3Ma8QUaQC7LjumPf0HN8QHlrn5Ru6oA-aThI20aBw6WMdtkj6KF59XyOH2W7sgXQT7sDjx8YIaPZZGUslDrF4VAFG2dL8j1XEZduJ_-RqIvRhXnksiwsJFBzG-wfdFWOVdAn0kOCJcushWEnYFM_7ysCEs5_m0timBjg&access_token=eyJraWQiOiJFMEIzOEg4TUNqYWlTZ09JM3RJbzd6OXU0UzRQMjgwQitVelN6MnNxTzhRPSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiIzYzkwN2Q0NS1kMzFkLTRkNjktODM1Yy0xMzk0OGQ4YWU5OGUiLCJldmVudF9pZCI6IjIyMjEzNjhlLTczZDctNDljYS05NTY0LTQ1NTI5OWI1ZTQxZCIsInRva2VuX3VzZSI6ImFjY2VzcyIsInNjb3BlIjoicGhvbmUgb3BlbmlkIHByb2ZpbGUgZW1haWwiLCJhdXRoX3RpbWUiOjE2MzExMDAyMDEsImlzcyI6Imh0dHBzOlwvXC9jb2duaXRvLWlkcC5hcC1zb3V0aGVhc3QtMi5hbWF6b25hd3MuY29tXC9hcC1zb3V0aGVhc3QtMl9UN1JWRkFQRVIiLCJleHAiOjE2MzExMDM4MDEsImlhdCI6MTYzMTEwMDIwMSwidmVyc2lvbiI6MiwianRpIjoiNmFiM2EyODgtMjI2MS00NmI2LWJhNTgtNzk1YTUxM2JlYmEzIiwiY2xpZW50X2lkIjoiNmcxbDg0a2x0Zzc4bTJhbm5vaWdvN2MzcDgiLCJ1c2VybmFtZSI6InN0ZnUifQ.ZIyAsRGdnvko6TIxPNpshJKHAeBF0NiZo641N03zTqsb2yj0f3khXEpirQZ5UblfRdFzYN6BMfOEYdNSpE92jEe-M1PFNZoeCjIhuOhH56cCK_5wvWmxA61GvUBJ2deC0gsYad-kGIhXYc97jaybmyk6OwC84FGsjDckS0K-48ca-NB5teXhuk-hEf3HT5K2IOZEDkcFqktxc34oAYUUWR3uAoAL35B0AHobXgRXfNOXA5PgLqhYph5r2Vn-404PtRR8FjbloYqngvy-pwwozbGPBanWdgCHtTatjw5SfAeCDHbOLid9gCpKQIz8A6h2WB_BzIvJF2fkMlWDXA9hMQ&expires_in=3600&token_type=Bearer
+
+These values are important as this is our challenge JWT token.
+
+Now we need to find our private JWT token such that we can verify if this challenge token is correct.
+
+To find it, go to https://cognito-idp.{region}.amazonaws.com/{userPoolId}/.well-known/jwks.json
+
+1. where userPoolId is from your Cognito pool that you've created.
+2. Region is where your Cognito service is deployed(for our usage is ap-southeast.2)
+
+![](/poolid.png)
+
+You should find a page looking like this:
+
+![](/jwt.png)
+
+We won't go through how to validate, but the gist is to use a JWT decoder such as "jwt-decode" package and parse in the challenge JWT token details that you've received against this. Is relatively simples. 
+
+Hope this was informative and hope you've enjoyed this security workshop :) 
